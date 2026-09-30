@@ -217,7 +217,7 @@ const SchemesPage = () => {
         return () => delete window.onProceedToUpload;
     }, []);
 
-    const handleFileUpload = async (e) => {
+    const handleFileUpload = () => {
         setUploadStatus('uploading');
         // Simulated upload
         setTimeout(() => {
@@ -300,75 +300,14 @@ const SchemesPage = () => {
                         {uploadStatus === 'done' ? (
                             <div className="space-y-6">
                                 <div className="text-center">
-                                    {aiResult?.validation?.status === 'REJECTED' ? (
-                                        <AlertCircle className="mx-auto text-red-500 mb-4" size={60} />
-                                    ) : (
-                                        <CheckCircle className="mx-auto text-green-400 mb-4" size={60} />
-                                    )}
+                                    <CheckCircle className="mx-auto text-green-400 mb-4" size={60} />
                                     <h4 className="text-xl font-bold dark:text-white mb-2">
-                                        {aiResult?.validation?.status === 'REJECTED' ? 'Verification Failed' : 'AI Analysis Complete'}
+                                        Documents Uploaded
                                     </h4>
                                     <p className="text-gray-400 text-sm mb-6">
-                                        {aiResult?.validation?.reason || 'Your document has been analyzed by Gemini AI.'}
+                                        Your document has been uploaded and is ready for verification.
                                     </p>
                                 </div>
-
-                                {aiResult?.ai_analysis && (
-                                    <div className="space-y-4">
-                                        <div className="bg-black/20 border border-slate-800 rounded-2xl p-4 space-y-3">
-                                            <h5 className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                                                <Bot size={14} /> Gemini AI Analysis
-                                            </h5>
-
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="space-y-1">
-                                                    <label className="text-[10px] text-gray-400">Owner Name</label>
-                                                    <p className="text-sm font-bold dark:text-white truncate">{aiResult.ai_analysis.owner_name}</p>
-                                                </div>
-                                                <div className="space-y-1">
-                                                    <label className="text-[10px] text-gray-400">Document Area</label>
-                                                    <p className="text-sm font-bold dark:text-white">{aiResult.ai_analysis.extracted_area_sqm} sqm</p>
-                                                </div>
-                                                <div className="space-y-1 col-span-2">
-                                                    <label className="text-[10px] text-gray-400">Property Address</label>
-                                                    <p className="text-sm dark:text-gray-300 leading-tight">{aiResult.ai_analysis.property_address}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {aiResult.validation && (
-                                            <div className="bg-blue-500/5 border border-blue-500/20 rounded-2xl p-4 space-y-3">
-                                                <h5 className="text-xs font-bold text-blue-400 uppercase flex items-center gap-2">
-                                                    <CheckCircle size={14} /> Land Validation Results
-                                                </h5>
-
-                                                <div className="space-y-2">
-                                                    <div className="flex justify-between items-center text-sm">
-                                                        <span className="text-gray-400 font-medium">Area Match</span>
-                                                        <span className={aiResult.validation.details?.area_diff_percent < 10 ? "text-green-400" : "text-amber-400"}>
-                                                            {100 - aiResult.validation.details?.area_diff_percent}% Match
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center text-sm">
-                                                        <span className="text-gray-400 font-medium">Identity Match</span>
-                                                        <span className="text-green-400">Verified (Farmer ID)</span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center text-sm">
-                                                        <span className="text-gray-400 font-medium">Location Check</span>
-                                                        <span className="text-green-400">Maharashtra (In-Bound)</span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="pt-2 border-t border-blue-500/20">
-                                                    <div className="flex justify-between items-center">
-                                                        <span className="text-xs text-gray-500">System Confidence Score</span>
-                                                        <span className="text-lg font-mono font-bold text-blue-400">{aiResult.validation.system_confidence}%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
 
                                 <button
                                     onClick={() => {
